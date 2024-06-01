@@ -24,9 +24,9 @@ module.exports = {
     ],
   },
   output: {
-    filename: '[name].[contenthash].js', 
-    path: path.resolve(__dirname, 'site'),
-    clean: true, 
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -34,24 +34,22 @@ module.exports = {
       filename: 'index.html'
     }),
     new MiniCssExtractPlugin({
-      filename: '[name].[contenthash].css', 
+      filename: 'styles.css',
     }),
     new CompressionPlugin({
       test: /\.(js|css)$/,
     }),
   ],
   optimization: {
-    splitChunks: {
-      chunks: 'all',
-    },
     minimize: true,
     minimizer: [new TerserPlugin()],
   },
   devServer: {
     static: {
-      directory: path.join(__dirname, 'site'),
+      directory: path.join(__dirname, 'dist'),
     },
     compress: true,
     port: 9000,
+    historyApiFallback: true,
   },
 };
